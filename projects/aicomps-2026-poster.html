@@ -53,7 +53,25 @@
   table.plain th, table.plain td { text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
   table.plain th { color:var(--muted); font-weight:600; width:34%; }
 
+  figure { margin:0; }
+  figure img { display:block; width:100%; height:auto; border-radius:10px; border:1px solid var(--line); background:#fff; }
+  figure a { display:block; }
+  figure a img { transition:border-color .15s, box-shadow .15s; }
+  figure a:hover img { border-color:var(--accent); box-shadow:0 2px 14px rgba(15,118,110,.14); }
+  .figside { display:grid; grid-template-columns:minmax(0,640px) minmax(0,1fr); gap:30px;
+    align-items:start; margin:16px 0 0; }
+  .note > :first-child { margin-top:0; }
+  .note ul { list-style:none; padding:0; margin:0 0 12px; }
+  .note li { position:relative; padding-left:17px; margin-bottom:10px; }
+  .note li:last-child { margin-bottom:0; }
+  .note li::before { content:""; position:absolute; left:0; top:.62em; width:6px; height:6px;
+    border-radius:1px; background:var(--accent); }
+
   footer { padding:28px 0 44px; color:var(--muted); font-size:.9rem; border-top:1px solid var(--line); }
+
+  @media (max-width:980px) {
+    .figside { grid-template-columns:1fr; }
+  }
 
   @media (max-width:760px) {
     h1 { font-size:1.6rem; }
@@ -82,7 +100,7 @@
   <div class="wrap">
     <div class="eyebrow">Poster · AICompS 2026</div>
     <h1>A Context-Aware Dataset for Prompt Injection Outcome Analysis</h1>
-    <p class="lead">Prompt Injection 연구에서 입력 수준의 정답과 결과 수준의 정답을 분리해 구성한 데이터셋을 제안한 포스터 논문입니다.</p>
+    <p class="lead">Prompt Injection 연구에서 입력 수준의 정답과 결과 수준의 정답을 분리해 구성한 데이터셋을 제안한 포스터 논문이다.</p>
     <span class="badge ok">수락</span>
     <span class="badge">2026년 12월 발표 예정</span>
   </div>
@@ -96,9 +114,9 @@
     <div class="split">
       <div>
         <h3>문제</h3>
-        <p>공격 입력이 Prompt Injection인지와, 그 응답이 실제로 위험한 결과를 낸 것인지는 서로 다른 문제입니다. 두 가지를 같은 라벨로 묶으면 평가 결과의 의미가 흐려집니다.</p>
+        <p>공격 입력이 Prompt Injection인지와, 그 응답이 실제로 위험한 결과를 낸 것인지는 서로 다른 문제다. 두 가지를 같은 라벨로 묶으면 평가 결과의 의미가 흐려진다.</p>
         <h3>접근</h3>
-        <p>정답을 세 계층으로 나눔니다. 입력이 Prompt Injection인지(Case GT), 응답이 위험 결과를 냈는지(Outcome GT), 스캐너가 무엇을 보고했는지(Scanner Result)를 따로 기록합니다.</p>
+        <p>정답을 세 계층으로 나눈다. 입력이 Prompt Injection인지(Case GT), 응답이 위험 결과를 냈는지(Outcome GT), 스캐너가 무엇을 보고했는지(Scanner Result)를 따로 기록한다.</p>
       </div>
       <div>
         <h3>기여</h3>
@@ -107,7 +125,7 @@
           <li>여러 Target LLM에서 수집한 응답을 같은 기준으로 비교할 수 있는 구조</li>
           <li>판정 근거의 출처를 남기는 근거 추적(provenance) 체계</li>
         </ul>
-        <p class="muted" style="font-size:.92rem">연구 배경과 진행 과정은 <a href="sapp-intern.html">SApp 인턴 활동 페이지</a>에 정리되어 있습니다.</p>
+        <p class="muted" style="font-size:.92rem">연구 배경과 진행 과정은 <a href="sapp-intern.html">SApp 인턴 활동 페이지</a>에 정리했다.</p>
       </div>
     </div>
 
@@ -115,7 +133,7 @@
       <tr><th>학회</th><td><a href="https://aicomps2026.conferenceservice.jp/">AICompS 2026</a></td></tr>
       <tr><th>상태</th><td>수락 · 2026년 12월 발표 예정</td></tr>
       <tr><th>포스터 파일</th><td><a href="../poster/AICompS2026_Context-Aware_PI_Dataset_poster.pdf">포스터 PDF 보기</a></td></tr>
-      <tr><th>공개 범위</th><td>포스터 PDF만 공개합니다. 데이터셋은 아직 공개하지 않습니다.</td></tr>
+      <tr><th>공개 범위</th><td>포스터 PDF만 공개한다. 데이터셋은 아직 공개하지 않는다.</td></tr>
     </table>
   </div>
 </section>
@@ -140,14 +158,14 @@
           <li><b>Outcome GT</b> — 응답이 실제로 위험한 결과를 냈는지</li>
           <li><b>Scanner Result</b> — 스캐너가 내놓은 판정</li>
         </ul>
-        <p class="muted" style="margin-bottom:0">세 계층을 나눔 이유는, 스캐너 결과를 정답처럼 쓰면 평가의 근거가 스캐너 자신에 기대게 되기 때문입니다.</p>
+        <p class="muted" style="margin-bottom:0">세 계층을 나눈 이유는, 스캐너 결과를 정답처럼 쓰면 평가의 근거가 스캐너 자신에 기대게 되기 때문이다.</p>
       </div>
     </details>
 
     <details>
       <summary>근거 추적(provenance)</summary>
       <div class="body">
-        <p>사례, 응답, 평가 기준, 판정 근거를 구조화된 레코드로 연결하고, 무결성 검증을 거친 manifest로 묶었습니다. 기록의 출처는 파일 확인과 대화 복구로 구분해 남겼고, 복원하지 못한 사례는 원본으로 다시 판정했습니다.</p>
+        <p>사례, 응답, 평가 기준, 판정 근거를 구조화된 레코드로 연결하고, 무결성 검증을 거친 manifest로 묶었다. 기록의 출처는 파일 확인과 대화 복구로 구분해 남겼고, 복원하지 못한 사례는 원본으로 다시 판정했다.</p>
       </div>
     </details>
   </div>
@@ -158,25 +176,39 @@
     <div class="eyebrow">03 · Judgment</div>
     <h2>판정 방식과 일치도</h2>
 
-    <p class="lead">390건의 응답에 AI 보조 판정을 적용했습니다. AI가 제안한 라벨을 연구자가 검토해 승인한 기록이며, 독립적인 Human Ground Truth로 표기하지 않습니다.</p>
+    <p class="lead">판정은 두 Track으로 나눠 진행했다. Track A는 전체 응답을 RISK·SAFE·UNCERTAIN으로 일괄 선별하고 사람 주석 390건과 비교했고, Track B는 세 축으로 나눈 결과 판정을 사람 승인 기준과 비교했다. 두 Track 모두 AI가 제안한 라벨을 연구자가 검토해 승인한 기록이며, 독립적인 Human Ground Truth로 표기하지 않는다.</p>
+
+    <div class="figside">
+      <figure>
+        <a href="../images/sapp-01-data-pipeline.png" target="_blank" rel="noopener"><img src="../images/sapp-01-data-pipeline.png" alt="데이터 구성과 판정 트랙 도식"></a>
+      </figure>
+      <div class="note">
+        <ul>
+          <li><b>Track A</b> — DeepSeek으로 RISK·SAFE·UNCERTAIN 일괄 선별을 돌렸다. 유효 라벨 13,701개 중 RISK가 1,652개(고유 Case 473개)다.</li>
+          <li><b>Track B</b> — 사람 승인 기준 862 평가축을 만들었다. 562 응답, 484 고유 Case다.</li>
+          <li><b>교집합</b> — AI가 RISK로 표시하고 사람이 PI Boundary TRUE로 승인한 216건(고유 Case 174개)을 검증된 경계 침해로 확정했다.</li>
+        </ul>
+        <p class="muted" style="margin-top:12px">일괄 선별은 원래 응답 집단을 대상으로 했고, 보정한 Qwen 응답은 다시 선별하지 않았다.</p>
+      </div>
+    </div>
 
     <details open>
       <summary>이진 판정 비교</summary>
       <div class="body">
-        <p>같은 390건에서 자동 Judge(DeepSeek)의 위험 판정과 사람 승인 판정을 비교한 일치율은 <b>82.05%</b>였습니다.</p>
+        <p>같은 390건에서 자동 Judge(DeepSeek)의 위험 판정과 사람 승인 판정을 비교한 일치율은 <b>82.05%</b>였다.</p>
       </div>
     </details>
 
     <details>
       <summary>Multi-Axis 판정 비교</summary>
       <div class="body">
-        <p>응답을 PI 경계 위반, 공격 목표 달성, 유해 지원의 세 축으로 나눠 판정했습니다. 비교 가능한 809개 축 중 <b>21개(2.60%)</b>에서 Judge와 사람 승인 판정이 달랐습니다.</p>
+        <p>응답을 PI 경계 위반, 공격 목표 달성, 유해 지원의 세 축으로 나눠 판정했다. 비교 가능한 809개 축 중 <b>21개(2.60%)</b>에서 Judge와 사람 승인 판정이 달랐다.</p>
         <table class="plain">
           <tr><th>PI 경계 위반</th><td>불일치 1.67%</td></tr>
           <tr><th>공격 목표 달성</th><td>불일치 2.36%</td></tr>
           <tr><th>유해 지원</th><td>불일치 37.50% (n=16)</td></tr>
         </table>
-        <p class="muted" style="margin-bottom:0">두 비교는 평가 집단과 기준이 달라 일치율을 직접 비교할 수 없습니다.</p>
+        <p class="muted" style="margin-bottom:0">두 비교는 평가 집단과 기준이 달라 일치율을 직접 비교할 수 없다.</p>
       </div>
     </details>
   </div>
@@ -191,9 +223,9 @@
       <summary>한계</summary>
       <div class="body">
         <ul>
-          <li>판정은 AI 보조를 사람이 승인하는 구조입니다. 판정의 독립성을 전제한 지표로 읽을 수 없습니다.</li>
-          <li>유해 지원 축은 표본이 16건으로 작아 불일치율을 일반화하기 어렵습니다.</li>
-          <li>Target LLM 3종에서 수집한 결과이므로 다른 모델로 확장할 때는 다시 확인이 필요합니다.</li>
+          <li>판정은 AI 보조를 사람이 승인하는 구조다. 판정의 독립성을 전제한 지표로 읽을 수 없다.</li>
+          <li>유해 지원 축은 표본이 16건으로 작아 불일치율을 일반화하기 어렵다.</li>
+          <li>Target LLM 3종에서 수집한 결과이므로 다른 모델로 확장할 때는 다시 확인이 필요하다.</li>
         </ul>
       </div>
     </details>
@@ -201,7 +233,7 @@
     <details>
       <summary>후속 작업</summary>
       <div class="body">
-        <p>포스터 이후 진행한 이진 판정과 다축 판정의 안정성 비교는 <a href="sapp-intern.html#challenges">SApp 인턴 활동 페이지</a>에 정리했습니다.</p>
+        <p>포스터 이후 진행한 이진 판정과 다축 판정의 안정성 비교는 <a href="sapp-intern.html#limits">SApp 인턴 활동 페이지</a>에 정리했다.</p>
       </div>
     </details>
   </div>
