@@ -7,64 +7,91 @@
 <meta name="description" content="Damin Oh 사이버보안 연구 및 프로젝트 포트폴리오">
 <style>
   :root {
-    --bg: #fafaf9; --surface: #ffffff; --ink: #1c1c1e; --muted: #6b6b70; --line: #e4e4e7;
-    --accent: #1f5fbf; --accent-soft: #e8f0fc; --ok: #1e7a4c; --ok-soft: #e6f4ec;
-    --warn: #9a6200; --warn-soft: #fdf3e1; --radius: 12px; --max: 960px;
+    color-scheme: light;
+    --bg: #ffffff; --surface: #f6f8fa; --surface-2: #eef2f6; --ink: #1f2328; --muted: #656d76; --line: #d8dee4;
+    --accent: #0f766e; --accent-ink: #ffffff; --accent-soft: rgba(15,118,110,.08);
+    --ok: #1a7f37; --ok-soft: #dafbe1; --warn: #9a6700; --warn-soft: #fff8c5; --gray-soft: #eef1f4;
+    --radius: 10px; --max:1280px;
+    --mono: ui-monospace, "JetBrains Mono", "Cascadia Mono", Consolas, "Courier New", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
   }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
-    color: var(--ink); background: var(--bg); line-height: 1.65; }
+  html { scroll-behavior: smooth; scroll-padding-top: 64px; scroll-snap-type: y proximity; }
+  ::selection { background: #b7e4dc; color: var(--ink); }
+  body { margin: 0; font-family: var(--sans); color: var(--ink); background: var(--bg);
+    line-height: 1.7; word-break: keep-all; overflow-wrap: break-word; -webkit-font-smoothing: antialiased; }
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
   .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
-  section { padding: 56px 0; border-top: 1px solid var(--line); }
-  h1, h2, h3 { line-height: 1.3; margin: 0 0 12px; }
-  h2 { font-size: 1.5rem; } h3 { font-size: 1.15rem; }
-  .eyebrow { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-  .muted { color: var(--muted); }
+  section { padding: 56px 0; border-top: 1px solid var(--line); scroll-snap-align: start; }
 
-  header.site { position: sticky; top: 0; z-index: 10; background: rgba(250,250,249,.92);
+  /* 스크롤 진입 시 섹션이 살짝 올라오며 나타나는 효과 (JS가 켜진 경우에만 숨김) */
+  .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+  .js .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; scroll-snap-type: none; }
+    .js .reveal, .js .reveal.in { opacity: 1; transform: none; transition: none; }
+  }
+  h1, h2, h3 { line-height: 1.3; margin: 0 0 12px; font-weight: 700; }
+  h2 { font-size: 1.5rem; } h3 { font-size: 1.1rem; }
+  .eyebrow { font-family: var(--mono); font-size: .78rem; letter-spacing: .04em; color: var(--accent); margin-bottom: 8px; }
+  .eyebrow::before { content: "// "; color: var(--muted); }
+  .muted { color: var(--muted); }
+  code, .mono { font-family: var(--mono); font-size: .92em; }
+
+  header.site { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.92);
     backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
   header.site .wrap { display: flex; align-items: center; justify-content: space-between; min-height: 56px; flex-wrap: wrap; gap: 8px; }
-  header.site .brand { font-weight: 700; color: var(--ink); }
-  nav a { margin-left: 18px; color: var(--ink); font-size: .95rem; }
+  header.site .brand { font-family: var(--mono); font-weight: 700; color: var(--ink); }
+  header.site .brand::after { content: "_"; color: var(--accent); margin-left: 2px; }
+  nav a { margin-left: 18px; color: var(--muted); font-family: var(--mono); font-size: .88rem; }
+  nav a:hover { color: var(--ink); text-decoration: none; }
 
   .hero { padding: 72px 0 48px; border-top: none; }
-  .hero h1 { font-size: 2.2rem; }
-  .hero .lead { font-size: 1.15rem; max-width: 680px; margin: 8px 0 20px; }
+  .hero h1 { font-size: 2.3rem; letter-spacing: -.01em; }
+  .hero .lead { font-size: 1.12rem; max-width: 1000px; margin: 8px 0 22px; color: var(--ink); }
+  .hero .lead .s { display: block; margin-bottom: 8px; word-break: keep-all; overflow-wrap: break-word; }
+  .hero .lead .s:last-child { margin-bottom: 0; }
   .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
-  .btn { display: inline-block; padding: 9px 16px; border-radius: 8px; border: 1px solid var(--line);
-    background: var(--surface); color: var(--ink); font-size: .95rem; }
-  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn { display: inline-block; padding: 8px 16px; border-radius: 6px; border: 1px solid var(--line);
+    background: var(--surface); color: var(--ink); font-family: var(--mono); font-size: .9rem; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 700; }
   .btn:hover { text-decoration: none; border-color: var(--accent); }
 
-  .badge { display: inline-block; font-size: .78rem; padding: 2px 9px; border-radius: 999px;
-    background: var(--accent-soft); color: var(--accent); margin-right: 6px; margin-bottom: 6px; }
-  .badge.ok { background: var(--ok-soft); color: var(--ok); }
-  .badge.warn { background: var(--warn-soft); color: var(--warn); }
-  .badge.gray { background: #eeeef0; color: var(--muted); }
+  .badge { display: inline-block; font-family: var(--mono); font-size: .74rem; padding: 2px 8px; border-radius: 4px;
+    background: var(--accent-soft); color: var(--accent); border: 1px solid rgba(15,118,110,.25);
+    margin-right: 6px; margin-bottom: 6px; }
+  .badge.ok { background: var(--ok-soft); color: var(--ok); border-color: rgba(26,127,55,.3); }
+  .badge.warn { background: var(--warn-soft); color: var(--warn); border-color: rgba(154,103,0,.3); }
+  .badge.gray { background: var(--gray-soft); color: var(--muted); border-color: var(--line); }
   .pending { color: var(--warn); font-weight: 600; }
 
-  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); }
-  a.card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line);
-    border-radius: var(--radius); padding: 22px; color: var(--ink); transition: border-color .15s, box-shadow .15s; }
-  a.card:hover { text-decoration: none; border-color: var(--accent); box-shadow: 0 2px 12px rgba(31,95,191,.08); }
-  a.card p { margin: 6px 0 14px; }
-  a.card .more { margin-top: auto; font-size: .92rem; color: var(--accent); font-weight: 600; }
+  .stack { display: flex; flex-direction: column; gap: 14px; }
+  a.card { display: grid; grid-template-columns: 300px 1fr; gap: 24px; align-items: center;
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 24px 26px; color: var(--ink); transition: border-color .15s, background .15s; }
+  a.card:hover { text-decoration: none; border-color: var(--accent); background: var(--surface-2); }
+  a.card .head h3 { margin: 6px 0 0; }
+  a.card p { margin: 0; color: #424a53; font-size: .95rem; word-break: keep-all; }
+  a.card .more { font-family: var(--mono); font-size: .88rem; color: var(--accent); white-space: nowrap; }
 
-  .rq { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; margin: 14px 0; }
+  @media (max-width: 760px) {
+    a.card { grid-template-columns: 1fr; gap: 10px; align-items: start; }
+  }
+
+  .rq { border-left: 2px solid var(--accent); padding: 4px 0 4px 16px; margin: 16px 0; }
   .rq strong { display: block; margin-bottom: 2px; }
 
   ul.clean { list-style: none; padding: 0; margin: 0; }
-  ul.clean li { padding: 10px 0; border-bottom: 1px solid var(--line); display: flex; gap: 16px; }
-  ul.clean li .when { min-width: 120px; color: var(--muted); font-size: .9rem; }
+  ul.clean li { padding: 12px 0; border-bottom: 1px solid var(--line); display: flex; gap: 16px; }
+  ul.clean li .when { min-width: 140px; font-family: var(--mono); color: var(--accent); font-size: .85rem; padding-top: 2px; }
 
-  footer { padding: 32px 0 48px; color: var(--muted); font-size: .9rem; border-top: 1px solid var(--line); }
+  footer { padding: 32px 0 48px; color: var(--muted); font-size: .88rem; border-top: 1px solid var(--line); font-family: var(--mono); }
 
   @media (max-width: 640px) {
-    .hero h1 { font-size: 1.7rem; }
-    nav a { margin-left: 12px; font-size: .88rem; }
+    .hero h1 { font-size: 1.8rem; }
+    nav a { margin-left: 12px; font-size: .82rem; }
     ul.clean li { flex-direction: column; gap: 2px; }
   }
 </style>
@@ -88,59 +115,57 @@
 
   <section class="hero" id="about">
     <div class="wrap">
-      <div class="eyebrow">Cybersecurity Research &amp; Detection Engineering</div>
+      <div class="eyebrow">Cybersecurity Student</div>
       <h1>Damin Oh</h1>
       <p class="lead">
-        악성코드 분석 결과를 검증 가능한 탐지 룰로 연결하는 연구를 합니다. 악성코드 분석, 탐지 엔지니어링(YARA·Sigma), AI 보안(Security for AI)에 관심이 있습니다.
+        <span class="s"><strong>AI for Security</strong>와 <strong>Security for AI</strong>에 관심을 가지고 있는 사이버보안 전공생입니다.</span>
+        <span class="s"><strong>malware analysis</strong>, <strong>LLM vulnerability detection</strong>, <strong>LLM red teaming</strong>을 함께 다루며, 최근에는 <strong>LLM Judge</strong>의 신뢰성과 편향을 평가하는 연구에도 관심을 두고 있습니다.</span>
+        <span class="s">연구 주제를 스스로 정의하고, 직접 구현한 실험을 재현하며 결과를 검증하는 과정에 큰 흥미와 열정을 가지고 있습니다.</span>
       </p>
       <div class="btn-row">
-        <a class="btn primary" href="#projects">프로젝트 보기</a>
-        <a class="btn" href="#contact">연락하기</a>
+        <a class="btn primary" href="#projects">View Projects</a>
+        <a class="btn" href="#contact">Contact</a>
       </div>
     </div>
   </section>
 
-  <section id="projects">
+  <section id="projects" class="reveal">
     <div class="wrap">
       <div class="eyebrow">Projects</div>
-      <h2>기록된 활동 3가지</h2>
-      <p class="muted">카드를 누르면 문제, 접근, 현재 상태를 담은 상세 페이지로 이동합니다.</p>
+      <h2>진행한 연구와 프로젝트</h2>
 
-      <div class="grid" style="margin-top:20px">
-        <a class="card" href="projects/malware-detection-workbench.html">
-          <div>
-            <span class="badge warn">구현 진행 중</span>
-            <span class="badge">도전학기제 · 2026</span>
-          </div>
-          <h3>Malware Detection Workbench</h3>
-          <p>악성코드 분석에서 얻은 증거를 탐지 가설과 YARA·Sigma 룰로 연결하고, 악성·정상 데이터에서 반복 검증하는 Detection-as-Code 플랫폼.</p>
-          <span class="more">상세 보기 →</span>
-        </a>
-
+      <div class="stack" style="margin-top:20px">
         <a class="card" href="projects/pivot.html">
-          <div>
-            <span class="badge ok">ASK 2026 논문 수상</span>
+          <div class="head">
+            <span class="badge ok">ASK 2026 동상</span>
             <span class="badge">졸업 프로젝트</span>
+            <h3>PIVOT</h3>
           </div>
-          <h3>PIVOT</h3>
-          <p>LLM 취약점 스캐너의 Prompt Injection 탐지 능력을 측정하는 벤치마킹 프레임워크. <span class="pending">[수상 명칭·역할 확인 필요]</span></p>
-          <span class="more">상세 보기 →</span>
+          <p>LLM 취약점 스캐너의 Prompt Injection 탐지 능력을 측정하는 벤치마킹 프레임워크. 전체 실험 설계와 평가 파이프라인, 데이터셋 구성, mutation engine 구현을 담당했습니다.</p>
         </a>
 
         <a class="card" href="projects/llm-judge.html">
-          <div>
+          <div class="head">
             <span class="badge">연구 관심</span>
             <span class="badge gray">범위 확정 필요</span>
+            <h3>LLM Judge</h3>
           </div>
-          <h3>LLM Judge</h3>
           <p>보안 평가에 쓰이는 LLM Judge의 신뢰성과 편향을 검토하고, Judge 기반 가드레일을 설계하는 연구.</p>
-          <span class="more">상세 보기 →</span>
+        </a>
+
+        <a class="card" href="projects/malware-detection-workbench.html">
+          <div class="head">
+            <span class="badge warn">구현 진행 중</span>
+            <span class="badge">개인 프로젝트</span>
+            <h3>Malware Detection Workbench</h3>
+          </div>
+          <p>악성코드 분석에서 얻은 증거를 탐지 가설과 YARA·Sigma 룰로 연결하고, 악성·정상 데이터에서 반복 검증하는 Detection-as-Code 플랫폼.</p>
         </a>
       </div>
     </div>
   </section>
 
-  <section id="research">
+  <section id="research" class="reveal">
     <div class="wrap">
       <div class="eyebrow">Research</div>
       <h2>연구 질문</h2>
@@ -161,21 +186,21 @@
     </div>
   </section>
 
-  <section id="log">
+  <section id="log" class="reveal">
     <div class="wrap">
       <div class="eyebrow">Log</div>
       <h2>활동 기록</h2>
       <ul class="clean">
-        <li><span class="when">2026.07 ~</span><span>이화여자대학교 SApp 학부 연구 인턴</span></li>
+        <li><span class="when">2026.07 ~</span><span><a href="projects/sapp-intern.html">이화여자대학교 SApp 학부 연구 인턴</a></span></li>
         <li><span class="when">2022.03 ~ 2027.02</span><span>이화여자대학교 사이버보안전공 (입학 2022.03, 졸업 예정 2027.02)</span></li>
         <li><span class="when">2026-11</span><span>Malware Detection Workbench 구현 진행 중 (기능 동결 계획 2026-11-22)</span></li>
-        <li><span class="when">2026</span><span>PIVOT, ASK 2026 논문 수상 <span class="pending">[날짜 확인 필요]</span></span></li>
+        <li><span class="when">2026.05</span><span>PIVOT, ASK 2026 학부생·고등학생 논문 경진대회 동상</span></li>
         <li><span class="when">연재</span><span>Velog "Weekly Security News" (<a href="https://velog.io/@damdam03/posts">velog.io/@damdam03</a>)</span></li>
       </ul>
     </div>
   </section>
 
-  <section id="contact">
+  <section id="contact" class="reveal">
     <div class="wrap">
       <div class="eyebrow">Contact</div>
       <h2>연락</h2>
@@ -191,5 +216,21 @@
   </div>
 </footer>
 
+<script>
+  document.documentElement.classList.add('js');
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+</script>
 </body>
 </html>
