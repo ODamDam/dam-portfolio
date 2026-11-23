@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SApp 학부 연구 인턴 | Damin Oh</title>
+<style>
+  :root { color-scheme:light;
+    --bg:#ffffff; --surface:#f6f8fa; --surface-2:#eef2f6; --ink:#1f2328; --muted:#656d76; --line:#d8dee4;
+    --accent:#0f766e; --accent-ink:#ffffff; --accent-soft:rgba(15,118,110,.08);
+    --ok:#1a7f37; --ok-soft:#dafbe1; --warn:#9a6700; --warn-soft:#fff8c5; --gray-soft:#eef1f4;
+    --mono:ui-monospace,"JetBrains Mono","Cascadia Mono",Consolas,"Courier New",monospace;
+    --max:1280px; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; scroll-padding-top:110px; }
+  body { margin:0; font-family:system-ui,-apple-system,"Segoe UI","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+    color:var(--ink); background:var(--bg); line-height:1.65; word-break:keep-all; overflow-wrap:break-word; }
+  a { color:var(--accent); text-decoration:none; } a:hover { text-decoration:underline; }
+  .wrap { max-width:var(--max); margin:0 auto; padding:0 20px; }
+
+  header.site { background:rgba(255,255,255,.94); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:20; }
+  header.site .row { display:flex; justify-content:space-between; align-items:center; min-height:52px; }
+  header.site .brand { font-family:var(--mono); font-weight:700; color:var(--ink); }
+  .tabs { display:flex; gap:4px; overflow-x:auto; padding:6px 0 8px; scrollbar-width:none; }
+  .tabs::-webkit-scrollbar { display:none; }
+  .tabs a { white-space:nowrap; padding:6px 12px; border-radius:8px; color:var(--ink); font-size:.92rem; }
+  .tabs a:hover { background:var(--accent-soft); color:var(--accent); text-decoration:none; }
+
+  section.block { padding:44px 0; border-top:1px solid var(--line); }
+  .eyebrow { font-family:var(--mono); font-size:.78rem; letter-spacing:.04em; color:var(--accent); margin-bottom:8px; }
+  .eyebrow::before { content:"// "; color:var(--muted); }
+  h1 { font-size:2.1rem; line-height:1.25; margin:6px 0 10px; }
+  h2 { font-size:1.4rem; margin:0 0 14px; }
+  h3 { font-size:1.05rem; margin:18px 0 8px; }
+  .lead { font-size:1.08rem; max-width:1000px; margin:0 0 18px; }
+  .muted { color:var(--muted); }
+  .badge { display:inline-block; font-size:.78rem; padding:2px 9px; border-radius:999px; margin-right:6px; margin-bottom:6px; background:var(--accent-soft); color:var(--accent); }
+  .badge.warn { background:var(--warn-soft); color:var(--warn); }
+  .pending { color:var(--warn); font-weight:600; }
+
+  .split { display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:start; }
+
+  details { background:var(--surface); border:1px solid var(--line); border-radius:10px; margin:12px 0; }
+  details summary { cursor:pointer; list-style:none; padding:14px 18px; font-weight:600; display:flex; justify-content:space-between; align-items:center; }
+  details summary::-webkit-details-marker { display:none; }
+  details summary::after { content:"펼치기 +"; font-size:.82rem; color:var(--muted); font-weight:500; }
+  details[open] summary::after { content:"접기 −"; }
+  details > .body { padding:0 18px 16px; }
+  details > .body p:first-child, details > .body ul:first-child { margin-top:0; }
+
+  table.plain { width:100%; border-collapse:collapse; font-size:.93rem; }
+  table.plain th, table.plain td { text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  table.plain th { color:var(--muted); font-weight:600; width:34%; }
+
+  footer { padding:28px 0 44px; color:var(--muted); font-size:.9rem; border-top:1px solid var(--line); }
+
+  @media (max-width:760px) {
+    h1 { font-size:1.6rem; }
+    .split { grid-template-columns:1fr; }
+    table.plain th { width:40%; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <div class="row">
+      <a class="brand" href="../index.html">Damin Oh</a>
+      <a href="../index.html#log" style="font-size:.92rem">← 활동 기록</a>
+    </div>
+    <nav class="tabs" aria-label="페이지 구역">
+      <a href="#overview">개요</a>
+      <a href="#questions">한계와 연구 질문</a>
+      <a href="#poster">포스터</a>
+      <a href="#challenges">도전과 한계</a>
+    </nav>
+  </div>
+</header>
+
+<!-- 히어로 -->
+<section class="block" style="border-top:none; padding-top:36px">
+  <div class="wrap">
+    <div class="eyebrow">Activity · 학부 연구 인턴</div>
+    <h1>이화여자대학교 SApp 학부 연구 인턴</h1>
+    <p class="lead">PIVOT 졸업 프로젝트가 끝난 뒤, 그 과정에서 발견한 한계와 새 연구 질문에 응답하는 방식으로 Prompt Injection과 LLM 관련 개인 연구를 이어 가고 있습니다.</p>
+    <span class="badge">2026.07 ~ 진행 중</span>
+    <span class="badge">AICompS 2026 포스터 수락</span>
+  </div>
+</section>
+
+<!-- 개요 -->
+<section class="block" id="overview">
+  <div class="wrap">
+    <div class="eyebrow">01 · Overview</div>
+    <h2>활동 개요</h2>
+
+    <table class="plain">
+      <tr><th>소속</th><td>이화여자대학교 SApp 연구실</td></tr>
+      <tr><th>기간</th><td>2026.07 ~ 진행 중</td></tr>
+      <tr><th>연구 범위</th><td>PIVOT 이후 발견한 한계와 연구 질문에 따른 Prompt Injection 및 LLM 평가 연구</td></tr>
+      <tr><th>내 역할</th><td>문제 인식, 실험 설계, 연구 질문, 데이터 수집, 데이터 전처리, 구현, 실험, 평가 전 과정을 직접 수행. 판정은 AI와 함께 진행</td></tr>
+      <tr><th>주요 산출물</th><td>AICompS 2026 포스터 논문 (아래 포스터 구역 참조)</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 한계와 연구 질문 -->
+<section class="block" id="questions">
+  <div class="wrap">
+    <div class="eyebrow">02 · From Limitations to Questions</div>
+    <h2>PIVOT의 한계에서 출발한 연구 질문</h2>
+    <p class="muted">각 항목은 PIVOT에서 확인한 한계, 그에 따라 던진 질문, 실제로 한 작업 순서로 정리했습니다.</p>
+
+    <details open>
+      <summary>한계 1 · 스캐너 어댑터가 측정 대상을 벗어남</summary>
+      <div class="body">
+        <p><b>발견</b>: 기존 스캐너 어댑터를 전수 조사했더니, Prompt Injection 외의 탐지기가 함께 섞여 있었습니다. 그대로 두면 결과의 의미가 흐려집니다.</p>
+        <p><b>질문</b>: 스캐너의 결과를 같은 기준으로 비교하려면 어댑터는 무엇을 측정해야 하는가?</p>
+        <p><b>작업</b>: 어댑터를 재구축하고, 스캐너별 원래 결과(raw result)와 정규화한 결과를 분리했습니다. 같은 사례를 여러 스캐너에 재현(replay)하는 절차를 정의했습니다.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>한계 2 · 정답 기준과 스캐너 결과가 뒤섞임</summary>
+      <div class="body">
+        <p><b>발견</b>: 스캐너 결과를 정답처럼 쓰면, 스캐너를 평가하는 근거 자체가 스캐너 결과에 기대게 됩니다.</p>
+        <p><b>질문</b>: 정답 기준을 스캐너와 독립적으로 세울 수 있는가?</p>
+        <p><b>작업</b>: 정답을 세 계층으로 나눴습니다. 입력이 Prompt Injection인지(Case GT), 응답이 실제 위험 결과를 냈는지(Outcome GT), 스캐너가 무엇을 냈는지(Scanner Result)를 따로 기록합니다.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>한계 3 · 실행 기록의 재현성 부족</summary>
+      <div class="body">
+        <p><b>발견</b>: 일부 판정 기록이 파일로 남아 있지 않았고, 대화 기록으로 복구해야 했습니다.</p>
+        <p><b>질문</b>: 복구한 기록과 원본 기록을 어떻게 구분하고, 결과의 근거 추적(provenance)을 어떻게 남길 것인가?</p>
+        <p><b>작업</b>: 기록의 출처를 파일 확인과 대화 복구로 구분하고, 복원하지 못한 사례는 원본으로 다시 판정했습니다. 최종적으로 사례, 응답, 평가 기준, 판정 근거를 구조화된 레코드와 무결성 검증을 거친 manifest로 연결했습니다.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>새 질문 · 입력 수준의 판정과 결과 수준의 판정은 같은가</summary>
+      <div class="body">
+        <p><b>질문</b>: 공격 입력이 성공했는지와 응답이 위험한지는 같은 문제인가?</p>
+        <p><b>작업</b>: 입력 수준의 정답과 결과 수준의 정답을 분리해 데이터셋을 구성했습니다. 벤치마크는 1,560건으로 구성했고, 보충 후보 396건 중 353건을 선정 기준에 따라 포함했습니다.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>새 질문 · 여러 Target LLM에서 결과가 어떻게 다른가</summary>
+      <div class="body">
+        <p><b>작업</b>: 세 종류의 Target LLM(Qwen2.5 7B, Llama 3.1 8B Instruct, Gemma 2 9B Instruct)에서 응답을 수집했습니다. 최종 수집 규모는 14,040건(3개 LLM × 3 seed)입니다.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>새 질문 · 사람이 아닌 판정 보조를 어디까지 믿을 수 있는가</summary>
+      <div class="body">
+        <p><b>작업</b>: 390건의 응답에 AI 보조 판정을 적용했습니다. AI가 제안한 라벨을 연구자가 검토해 승인한 기록이며, 독립적인 Human Ground Truth로 표기하지 않습니다.</p>
+        <p>같은 390건에서 자동 Judge(DeepSeek)의 위험 판정과 비교한 일치율은 82.05%였습니다. 응답을 PI 경계 위반, 공격 목표 달성, 유해 지원의 세 축으로 나눠 판정한 Multi-Axis 평가에서는 비교 가능한 809개 축 중 21개(2.60%)에서 Judge와 사람 승인 판정이 달랐습니다. 불일치율은 축마다 달랐습니다(PI 경계 1.67%, 공격 목표 2.36%, 유해 지원 37.50%, n=16).</p>
+        <p class="muted" style="margin-bottom:0">두 비교는 평가 집단과 기준이 달라 일치율을 직접 비교할 수 없습니다. 이 판정 방식이 결과에 미치는 영향은 한계로 명시합니다.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- 포스터 -->
+<section class="block" id="poster">
+  <div class="wrap">
+    <div class="eyebrow">03 · Poster</div>
+    <h2>AICompS 2026 포스터 논문</h2>
+
+    <table class="plain">
+      <tr><th>제목</th><td>A Context-Aware Dataset for Prompt Injection Outcome Analysis</td></tr>
+      <tr><th>학회</th><td><a href="https://aicomps2026.conferenceservice.jp/">AICompS 2026</a></td></tr>
+      <tr><th>발표</th><td>2026년 12월 (예정)</td></tr>
+      <tr><th>수락 여부</th><td>수락</td></tr>
+      <tr><th>포스터 파일</th><td><a href="../poster/AICompS2026_Context-Aware_PI_Dataset_poster.pdf">포스터 PDF 보기</a></td></tr>
+    </table>
+
+    <details>
+      <summary>포스터 내용 요약</summary>
+      <div class="body">
+        <p>입력 수준의 Case GT를 Outcome GT와 분리해 데이터셋을 구성한 점을 기여로 정리했습니다. 발표 전 교수님과 박사님의 피드백을 반영해 수정했습니다.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- 도전과 한계 -->
+<section class="block" id="challenges">
+  <div class="wrap">
+    <div class="eyebrow">04 · Challenges</div>
+    <h2>도전과 한계</h2>
+
+    <details open>
+      <summary>겪은 어려움</summary>
+      <div class="body">
+        <ul>
+          <li>실행 기록 일부를 파일로 확인하지 못해, 대화 기록으로 복구해야 했습니다.</li>
+          <li>기존 스캐너 어댑터의 측정 범위를 바로잡기 위해 구현을 다시 세웠습니다.</li>
+          <li>AI 보조 판정을 승인하는 구조라 판정의 독립성을 별도로 설명해야 합니다.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>후속 실험 · 이진 판정과 다축 판정 비교</summary>
+      <div class="body">
+        <p>포스터 이후, 같은 응답과 같은 Judge에서 판정 형식만 바꿔 이진 판정과 다축 판정을 비교했습니다(519 응답 재집계, 같은 날 재실행 497 응답). 경향 파악용 실험이며 논문화하지 않았습니다.</p>
+        <ul>
+          <li>포스터의 일치율 차이(82% 대 97%)는 대부분 평가 집단 차이에서 왔고, 판정 형식 효과는 다축이 약 1~3%p 높은 수준이었습니다.</li>
+          <li>더 뚜렷한 차이는 안정성이었습니다. 재실행 시 이진 판정은 약 6%의 라벨이 바뀌고 오류 방향도 달라졌지만, 다축 판정은 약 2%만 바뀌었습니다.</li>
+          <li>유해 지원 축은 표본이 적어 결론을 보류했습니다.</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    © Damin Oh · 초안 · <a href="../index.html#log">← 활동 기록</a>
+  </div>
+</footer>
+
+</body>
+</html>

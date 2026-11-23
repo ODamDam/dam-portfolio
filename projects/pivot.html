@@ -5,69 +5,230 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PIVOT | Damin Oh</title>
 <style>
-  :root { --bg:#fafaf9; --surface:#fff; --ink:#1c1c1e; --muted:#6b6b70; --line:#e4e4e7; --accent:#1f5fbf;
-    --accent-soft:#e8f0fc; --ok:#1e7a4c; --ok-soft:#e6f4ec; --warn:#9a6200; --warn-soft:#fdf3e1; --max:860px; }
-  * { box-sizing: border-box; }
-  body { margin:0; font-family: system-ui,-apple-system,"Segoe UI","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
-    color:var(--ink); background:var(--bg); line-height:1.65; }
+  :root { color-scheme:light;
+    --bg:#ffffff; --surface:#f6f8fa; --surface-2:#eef2f6; --ink:#1f2328; --muted:#656d76; --line:#d8dee4;
+    --accent:#0f766e; --accent-ink:#ffffff; --accent-soft:rgba(15,118,110,.08);
+    --ok:#1a7f37; --ok-soft:#dafbe1; --warn:#9a6700; --warn-soft:#fff8c5; --gray-soft:#eef1f4;
+    --mono:ui-monospace,"JetBrains Mono","Cascadia Mono",Consolas,"Courier New",monospace;
+    --max:1280px; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; scroll-padding-top:110px; }
+  body { margin:0; font-family:system-ui,-apple-system,"Segoe UI","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+    color:var(--ink); background:var(--bg); line-height:1.65; word-break:keep-all; overflow-wrap:break-word; }
   a { color:var(--accent); text-decoration:none; } a:hover { text-decoration:underline; }
   .wrap { max-width:var(--max); margin:0 auto; padding:0 20px; }
-  header.site { border-bottom:1px solid var(--line); background:rgba(250,250,249,.92); }
-  header.site .wrap { display:flex; justify-content:space-between; align-items:center; min-height:56px; }
-  header.site .brand { font-weight:700; color:var(--ink); }
-  main { padding:40px 0 56px; }
-  .eyebrow { font-size:.8rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
-  h1 { font-size:2rem; line-height:1.3; margin:0 0 8px; }
-  h2 { font-size:1.2rem; margin:28px 0 8px; }
+
+  header.site { background:rgba(255,255,255,.94); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:20; }
+  header.site .row { display:flex; justify-content:space-between; align-items:center; min-height:52px; }
+  header.site .brand { font-family:var(--mono); font-weight:700; color:var(--ink); }
+  .tabs { display:flex; gap:4px; overflow-x:auto; padding:6px 0 8px; scrollbar-width:none; }
+  .tabs::-webkit-scrollbar { display:none; }
+  .tabs a { white-space:nowrap; padding:6px 12px; border-radius:8px; color:var(--ink); font-size:.92rem; }
+  .tabs a:hover { background:var(--accent-soft); color:var(--accent); text-decoration:none; }
+
+  section.block { padding:44px 0; border-top:1px solid var(--line); }
+  .eyebrow { font-family:var(--mono); font-size:.78rem; letter-spacing:.04em; color:var(--accent); margin-bottom:8px; }
+  .eyebrow::before { content:"// "; color:var(--muted); }
+  h1 { font-size:2.1rem; line-height:1.25; margin:6px 0 10px; }
+  h2 { font-size:1.4rem; margin:0 0 14px; }
+  h3 { font-size:1.05rem; margin:18px 0 8px; }
+  .lead { font-size:1.08rem; max-width:1000px; margin:0 0 18px; }
   .muted { color:var(--muted); }
-  .badge { display:inline-block; font-size:.78rem; padding:2px 9px; border-radius:999px; margin-right:6px; background:var(--accent-soft); color:var(--accent); }
+  .badge { display:inline-block; font-size:.78rem; padding:2px 9px; border-radius:999px; margin-right:6px; margin-bottom:6px; background:var(--accent-soft); color:var(--accent); }
   .badge.ok { background:var(--ok-soft); color:var(--ok); }
-  .panel { background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:24px; margin-top:16px; }
+  .badge.warn { background:var(--warn-soft); color:var(--warn); }
   .pending { color:var(--warn); font-weight:600; }
+
+  .split { display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:start; }
+
+  details { background:var(--surface); border:1px solid var(--line); border-radius:10px; margin:12px 0; }
+  details summary { cursor:pointer; list-style:none; padding:14px 18px; font-weight:600; display:flex; justify-content:space-between; align-items:center; }
+  details summary::-webkit-details-marker { display:none; }
+  details summary::after { content:"펼치기 +"; font-size:.82rem; color:var(--muted); font-weight:500; }
+  details[open] summary::after { content:"접기 −"; }
+  details > .body { padding:0 18px 16px; }
+  details > .body p:first-child, details > .body ul:first-child { margin-top:0; }
+
+  .steps { display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; margin:6px 0 18px; }
+  .steps div { background:var(--accent-soft); color:var(--accent); border-radius:10px; padding:10px 8px; text-align:center; font-size:.9rem; font-weight:600; }
+  .steps small { display:block; font-weight:400; color:var(--muted); font-size:.78rem; }
+
+  table.plain { width:100%; border-collapse:collapse; font-size:.93rem; }
+  table.plain th, table.plain td { text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  table.plain th { color:var(--muted); font-weight:600; width:34%; }
+
   footer { padding:28px 0 44px; color:var(--muted); font-size:.9rem; border-top:1px solid var(--line); }
-  @media (max-width:640px) { h1 { font-size:1.6rem; } }
+
+  @media (max-width:760px) {
+    h1 { font-size:1.6rem; }
+    .split { grid-template-columns:1fr; }
+    .steps { grid-template-columns:1fr 1fr; }
+    table.plain th { width:40%; }
+  }
 </style>
 </head>
 <body>
 
 <header class="site">
   <div class="wrap">
-    <div class="brand">Damin Oh</div>
-    <a href="../index.html#projects">← 프로젝트 목록</a>
+    <div class="row">
+      <a class="brand" href="../index.html">Damin Oh</a>
+      <a href="../index.html#projects" style="font-size:.92rem">← 프로젝트 목록</a>
+    </div>
+    <nav class="tabs" aria-label="페이지 구역">
+      <a href="#overview">개요</a>
+      <a href="#components">구성 요소</a>
+      <a href="#results">결과·수상</a>
+      <a href="#limits">한계·다음 단계</a>
+    </nav>
   </div>
 </header>
 
-<main>
-<div class="wrap">
-  <div class="eyebrow">Project · 졸업 프로젝트</div>
-  <h1>PIVOT</h1>
-  <p class="muted">
-    <span class="badge ok">ASK 2026 논문 수상</span>
-  </p>
-
-  <div class="panel">
-    <h2 style="margin-top:0">개요</h2>
-    <p>LLM 취약점 스캐너의 Prompt Injection 탐지 능력을 측정하는 벤치마킹 프레임워크입니다. <span class="pending">[수상 명칭·날짜·내 역할 확인 필요]</span></p>
-
-    <h2>문제</h2>
-    <p class="pending">[작성 필요: 스캐너의 탐지 능력을 어떻게 비교 가능하게 측정할 것인가]</p>
-
-    <h2>접근</h2>
-    <p class="pending">[작성 필요: 벤치마크 설계, 평가 축, 결과 해석 기준]</p>
-
-    <h2>후속 연구</h2>
-    <p class="pending">[확인 필요: PIVOT+ 연구 범위와 현재 상태]</p>
+<!-- 히어로 -->
+<section class="block" style="border-top:none; padding-top:36px">
+  <div class="wrap">
+    <div class="eyebrow">Project · 사이버보안 졸업 프로젝트</div>
+    <h1>PIVOT</h1>
+    <p class="lead">LLM 취약점 스캐너의 Prompt Injection 탐지 능력을 같은 조건에서 측정하는 벤치마킹 프레임워크입니다.</p>
+    <span class="badge ok">ASK 2026 학부생·고등학생 논문 경진대회 동상</span>
   </div>
+</section>
 
-  <div class="panel">
-    <h2 style="margin-top:0">결과</h2>
-    <p class="pending">[확인 필요: 논문 제목, 학회, 링크, 주요 수치(분모 포함)]</p>
+<!-- 개요 -->
+<section class="block" id="overview">
+  <div class="wrap">
+    <div class="eyebrow">01 · Overview</div>
+    <h2>문제와 접근</h2>
+
+    <div class="split">
+      <div>
+        <h3>문제</h3>
+        <p>LLM 취약점 스캐너마다 Prompt Injection을 탐지하는 방식과 보고 기준이 달라, 결과를 서로 비교하기 어렵습니다.</p>
+        <h3>접근</h3>
+        <p>공격 프롬프트를 변형하는 생성기(Generator)와, 정답 기준(ground truth)에 맞춰 스캐너 결과를 채점하는 평가기(Evaluator)를 분리해 구성했습니다.</p>
+      </div>
+      <div>
+        <h3>한 줄 요약</h3>
+        <p>스캐너의 탐지 결과를 정답 기준과 대조해, 같은 조건에서 비교 가능한 수치로 바꾸는 프레임워크입니다.</p>
+        <p class="muted" style="font-size:.92rem">구현 세부와 후속 재구축은 <a href="sapp-intern.html">SApp 인턴 활동 페이지</a>에서 이어집니다.</p>
+      </div>
+    </div>
   </div>
-</div>
-</main>
+</section>
+
+<!-- 구성 요소 -->
+<section class="block" id="components">
+  <div class="wrap">
+    <div class="eyebrow">02 · Components</div>
+    <h2>구성 요소</h2>
+
+    <div class="steps">
+      <div>Generator<small>변형 프롬프트 생성</small></div>
+      <div>Target<small>피평가 LLM</small></div>
+      <div>Scanner<small>스캐너 실행</small></div>
+      <div>Evaluator<small>정답 기준 대조</small></div>
+    </div>
+
+    <details open>
+      <summary>Generator · Prompt Mutation</summary>
+      <div class="body">
+        <p>원본 공격 프롬프트에 변형 연산자를 적용해 여러 형태의 입력을 만듭니다. 변형 연산자는 구조 유지형 값 변이(constraint), 형식 교란(FMT), 어휘 수준 변이(LEX), 구문 수준 변이(SYN)의 네 계열로 구현했습니다. 각 연산자는 강도 1~5단계로 나뉩니다.</p>
+        <p class="muted">구조를 보존한 채 변형하는 Structure-Intact Prompt를 함께 씁니다. 실험에 적용한 연산자는 형식(FMT) 2개, 구문(SYN) 3개, 어휘(LEX) 6개, 총 11개입니다.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Evaluator · 정답 기준과 채점</summary>
+      <div class="body">
+        <p>각 사례의 정답 기준(ground truth)을 먼저 고정하고, 스캐너 결과를 그 기준과 비교해 탐지 성공과 실패를 나눕니다. 스캐너가 내놓은 원래 판정(raw result)과 정규화한 판정은 분리해 기록합니다.</p>
+        <p class="muted">정답 기준과 스캐너 결과를 서로 다른 계층으로 나누는 이유는, 스캐너 결과를 정답처럼 쓰면 평가가 순환하기 때문입니다.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>평가 지표</summary>
+      <div class="body">
+        <p>Recall, Precision, FPR, FNR을 기본 지표로 씁니다. 구조를 보존한 입력에 대한 탐지율과 변형 입력에 대한 회피율(Mutation Evasion Rate)도 함께 봅니다.</p>
+        <p class="muted" style="margin-bottom:0">계산에 쓴 분모와 수치는 결과 절에서 확정된 값만 옮깁니다.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- 결과·수상 -->
+<section class="block" id="results">
+  <div class="wrap">
+    <div class="eyebrow">03 · Results</div>
+    <h2>결과와 수상</h2>
+
+    <table class="plain">
+      <tr><th>발표 논문</th><td>PIVOT: Prompt Injection 탐지 성능 평가를 위한 LLM 취약점 스캐너 벤치마킹 프레임워크<br><span class="muted">PIVOT: A Benchmarking Framework for Evaluating LLM Vulnerability Scanners on Prompt Injection Detection</span></td></tr>
+      <tr><th>학회·수상</th><td>ASK 2026 학부생·고등학생 논문 경진대회 동상 (2026년 5월 학술대회)</td></tr>
+      <tr><th>내 역할</th><td>전체 실험 설계, 최종 평가 파이프라인, 데이터셋 구성, 데이터셋 전처리 및 정규화, mutation engine 구현</td></tr>
+      <tr><th>주요 수치</th><td>Garak 재현율 38.0%, 정밀도 90.5%, 오탐률 12.0%, 미탐률 62.0% / PyRIT 재현율 28.0%, 정밀도 73.7%, 오탐률 30.0%, 미탐률 72.0% (위험 응답 150건, 안전 응답 50건 샘플 기준)</td></tr>
+      <tr><th>논문 링크</th><td><a href="https://kips.or.kr/bbs/confn/article/4903">한국정보처리학회 ASK 2026 논문 페이지</a> · 논문집 제33권 제1호 (ISSN 2671-7298)</td></tr>
+    </table>
+
+    <details open>
+      <summary>평가 지표 비교 (단위: %)</summary>
+      <div class="body">
+        <table class="plain">
+          <tr><th>지표</th><td>Garak / PyRIT</td></tr>
+          <tr><th>재현율 (Recall)</th><td>38.0 / 28.0</td></tr>
+          <tr><th>정밀도 (Precision)</th><td>90.5 / 73.7</td></tr>
+          <tr><th>오탐률 (FPR)</th><td>12.0 / 30.0</td></tr>
+          <tr><th>미탐률 (FNR)</th><td>62.0 / 72.0</td></tr>
+        </table>
+        <p class="muted" style="margin-bottom:0">PyRIT의 평가자는 Llama3-8B 모델입니다. 두 스캐너 모두 미탐률이 높았고, PyRIT은 Garak보다 오탐률이 높았습니다.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>결과 해석 시 주의</summary>
+      <div class="body">
+        <ul>
+          <li>결과 수치는 스캐너 어댑터 구현과 정답 기준에 따라 달라집니다. 같은 수치라도 조건을 함께 봐야 합니다.</li>
+          <li>Garak 결과는 어댑터에 PI 외 탐지기가 섞여 있던 문제를 확인한 뒤 보수적으로 해석합니다. 논문 실험은 SApp 인턴 이전에 수행했으며, 재구축 이전 어댑터 구현 기준입니다.</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- 한계·다음 단계 -->
+<section class="block" id="limits">
+  <div class="wrap">
+    <div class="eyebrow">04 · Limitations</div>
+    <h2>한계와 다음 단계</h2>
+
+    <details open>
+      <summary>한계</summary>
+      <div class="body">
+        <ul>
+          <li>평가 표본이 200건(위험 150, 안전 50)으로 작아 수치를 일반화하기 어렵습니다.</li>
+          <li>정답 레이블은 규칙 기반 자동 분류와 연구자 검토로 만들었고, 다수 판정자 간 일치도는 측정하지 않았습니다.</li>
+          <li>Vulnerable LLM에 취약 응답을 강제로 유도했기 때문에, 실제 서비스 환경의 응답 분포와 다릅니다.</li>
+          <li>이후 어댑터 구현을 전수 조사한 결과 재구축이 필요했습니다. 논문 수치는 이 점을 감안해 읽어야 합니다.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>다음 단계</summary>
+      <div class="body">
+        <ul>
+          <li>재구축한 데이터셋과 평가 체계로 후속 연구 진행 (<a href="sapp-intern.html">SApp 인턴 활동</a>)</li>
+          <li>정답 기준 판정 재검토를 SApp 인턴 기간 중 완료했습니다.</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+</section>
 
 <footer>
-  <div class="wrap">© Damin Oh · 초안</div>
+  <div class="wrap">
+    © Damin Oh · 초안 · <a href="../index.html#projects">← 프로젝트 목록</a>
+  </div>
 </footer>
 
 </body>
