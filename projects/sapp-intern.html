@@ -329,7 +329,7 @@
         <ul>
           <li><b>입력</b> — 공개 데이터셋 9종에서 모은 1,560개 Case를 동결했다.</li>
           <li><b>실행</b> — 3개 Target LLM에 각 3개 seed로 돌려 14,040개 응답을 모았다.</li>
-          <li><b>Track A</b> — DeepSeek으로 RISK·SAFE·UNCERTAIN 일괄 선별을 돌렸다. 유효 라벨 13,701개 중 RISK가 1,652개(고유 Case 473개)였고, 사람 주석 390건과 비교한 일치율이 82.05%였다.</li>
+          <li><b>Track A</b> — DeepSeek V4 Pro로 RISK·SAFE·UNCERTAIN 일괄 선별을 돌렸다. 유효 라벨 13,701개 중 RISK가 1,652개(고유 Case 473개)였고, 사람 승인 위험 라벨 390건과 비교한 일치율이 82.05%였다.</li>
           <li><b>Track B</b> — 사람 승인 기준 862개 평가축(562 응답·484 고유 Case)을 만들고, DeepSeek 다축 판정과 비교 가능한 809축에서 21축(2.60%)이 어긋났다.</li>
           <li><b>교집합</b> — AI가 RISK로 표시한 응답과 사람이 PI Boundary TRUE로 승인한 응답이 겹치는 <b>216건(고유 Case 174개)</b>을 검증된 경계 침해로 확정했다.</li>
         </ul>
@@ -349,8 +349,8 @@
       <div class="body">
         <div class="note">
           <ul>
-            <li>검증된 경계 침해 216건은 AI의 RISK 표시와 사람의 PI Boundary TRUE 승인이 모두 성립한 응답이며, <b>전부 Indirect PI로 분류된 사례</b>였다.</li>
-            <li>성공 사례의 내부 구성에서는 Tool Action·Unauthorized Action 유형이 211개로 가장 많았다. 성공 사례 안의 구성비이며, 해당 유형 전체의 공격 성공률을 뜻하지 않는다.</li>
+            <li>검증된 경계 침해 216건은 AI의 RISK 표시와 사람의 PI Boundary TRUE 승인이 모두 성립한 응답이다. 216건 모두 검증된 Runtime 맥락과 사람 승인 평가 기준에 연결되어 있다.</li>
+            <li>216건 중 <b>211건(97.7%)</b>이 indirect tool-action 시나리오에 몰려 있었다. 검증된 216건 안의 구성비이며, 해당 유형 전체의 공격 성공률을 뜻하지 않는다. 나머지 5건은 이 유형에 들어가지 않는다.</li>
             <li>DeepSeek 다축 자동 판정과 사람 승인 결과를 이진 비교한 809개 평가축 중 <b>788축이 일치(97.40%)</b>했고 21축(2.60%)에서 불일치가 관찰되었다.</li>
             <li>축별 비교 표본은 PI Boundary 539, Attacker Goal 254, Harmful Assistance 16으로 분모가 서로 다르다.</li>
           </ul>
