@@ -18,7 +18,7 @@
   a { color:var(--accent); text-decoration:none; } a:hover { text-decoration:underline; }
   .wrap { max-width:var(--max); margin:0 auto; padding:0 20px; }
 
-  header.site { background:rgba(255,255,255,.94); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:20; }
+  header.site { background:#ffffff; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:20; }
   header.site .row { display:flex; justify-content:space-between; align-items:center; min-height:52px; }
   header.site .brand { font-family:var(--mono); font-weight:700; color:var(--ink); }
   .tabs { display:flex; gap:4px; overflow-x:auto; padding:6px 0 8px; scrollbar-width:none; }
@@ -39,7 +39,9 @@
   .badge.warn { background:var(--warn-soft); color:var(--warn); }
   .pending { color:var(--warn); font-weight:600; }
 
-  .split { display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:start; }
+  .split { display:grid; grid-template-columns:minmax(0,640px) minmax(0,1fr); gap:30px; align-items:start; }
+  .parts h3:first-child { margin-top:0; }
+  .parts p { margin:0 0 4px; font-size:.95rem; }
 
   details { background:var(--surface); border:1px solid var(--line); border-radius:10px; margin:12px 0; }
   details summary { cursor:pointer; list-style:none; padding:14px 18px; font-weight:600; display:flex; justify-content:space-between; align-items:center; }
@@ -49,20 +51,47 @@
   details > .body { padding:0 18px 16px; }
   details > .body p:first-child, details > .body ul:first-child { margin-top:0; }
 
-  .steps { display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; margin:6px 0 18px; }
-  .steps div { background:var(--accent-soft); color:var(--accent); border-radius:10px; padding:10px 8px; text-align:center; font-size:.9rem; font-weight:600; }
-  .steps small { display:block; font-weight:400; color:var(--muted); font-size:.78rem; }
 
   table.plain { width:100%; border-collapse:collapse; font-size:.93rem; }
   table.plain th, table.plain td { text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
   table.plain th { color:var(--muted); font-weight:600; width:34%; }
 
+  figure { margin:0; }
+  figure img { display:block; width:100%; height:auto; border-radius:10px; border:1px solid var(--line); background:#fff; }
+  figcaption { font-size:.85rem; color:var(--muted); margin-top:8px; }
+
+  figure a { display:block; }
+  figure a img { transition:border-color .15s, box-shadow .15s; }
+  figure a:hover img { border-color:var(--accent); box-shadow:0 2px 14px rgba(15,118,110,.14); }
+
+  .note > :first-child { margin-top:0; }
+  .note p { font-size:1rem; margin:0 0 12px; }
+  .note p:last-child { margin-bottom:0; }
+  .note ul { list-style:none; padding:0; margin:0 0 12px; }
+  .note ul:last-child { margin-bottom:0; }
+  .note li { position:relative; padding-left:17px; margin-bottom:10px; font-size:1rem; }
+  .note li:last-child { margin-bottom:0; }
+  .note li::before { content:""; position:absolute; left:0; top:.62em; width:6px; height:6px;
+    border-radius:1px; background:var(--accent); }
+  .note li b { color:var(--ink); }
+
+  .figside { display:grid; grid-template-columns:minmax(0,640px) minmax(0,1fr); gap:30px;
+    align-items:start; margin:16px 0 0; }
+  .figside figure { margin:0; }
+
+  .figstack { margin:16px 0 0; }
+  .figstack .note { max-width:900px; margin-bottom:16px; }
+  .figstack figure { margin:0; max-width:780px; }
+
   footer { padding:28px 0 44px; color:var(--muted); font-size:.9rem; border-top:1px solid var(--line); }
+
+  @media (max-width:980px) {
+    .figside { grid-template-columns:1fr; }
+  }
 
   @media (max-width:760px) {
     h1 { font-size:1.6rem; }
     .split { grid-template-columns:1fr; }
-    .steps { grid-template-columns:1fr 1fr; }
     table.plain th { width:40%; }
   }
 </style>
@@ -78,23 +107,22 @@
     <nav class="tabs" aria-label="페이지 구역">
       <a href="#overview">개요</a>
       <a href="#components">구성 요소</a>
-      <a href="#results">결과·수상</a>
+      <a href="#dataset">데이터셋과 지표</a>
+      <a href="#results">결과</a>
       <a href="#limits">한계·다음 단계</a>
     </nav>
   </div>
 </header>
 
-<!-- 히어로 -->
 <section class="block" style="border-top:none; padding-top:36px">
   <div class="wrap">
     <div class="eyebrow">Project · 사이버보안 졸업 프로젝트</div>
     <h1>PIVOT</h1>
-    <p class="lead">LLM 취약점 스캐너의 Prompt Injection 탐지 능력을 같은 조건에서 측정하는 벤치마킹 프레임워크입니다.</p>
-    <span class="badge ok">ASK 2026 학부생·고등학생 논문 경진대회 동상</span>
+    <p class="lead">LLM 취약점 스캐너의 Prompt Injection 탐지 능력을 같은 조건에서 측정하는 벤치마킹 프레임워크다.</p>
+    <span class="badge ok">ASK 2026 학부생 논문 경진대회 동상</span>
   </div>
 </section>
 
-<!-- 개요 -->
 <section class="block" id="overview">
   <div class="wrap">
     <div class="eyebrow">01 · Overview</div>
@@ -103,83 +131,259 @@
     <div class="split">
       <div>
         <h3>문제</h3>
-        <p>LLM 취약점 스캐너마다 Prompt Injection을 탐지하는 방식과 보고 기준이 달라, 결과를 서로 비교하기 어렵습니다.</p>
+        <p>LLM 취약점 스캐너마다 Prompt Injection을 탐지하는 방식과 보고 기준이 달라, 결과를 서로 비교하기 어렵다.</p>
         <h3>접근</h3>
-        <p>공격 프롬프트를 변형하는 생성기(Generator)와, 정답 기준(ground truth)에 맞춰 스캐너 결과를 채점하는 평가기(Evaluator)를 분리해 구성했습니다.</p>
+        <p>공격 프롬프트를 변형하는 생성기(Generator)와, 정답 기준(ground truth)에 맞춰 스캐너 결과를 채점하는 평가기(Evaluator)를 분리해 구성했다. 상용 스캐너는 Evaluator 모듈만 떼어내 같은 입력으로 돌린다.</p>
       </div>
       <div>
-        <h3>한 줄 요약</h3>
-        <p>스캐너의 탐지 결과를 정답 기준과 대조해, 같은 조건에서 비교 가능한 수치로 바꾸는 프레임워크입니다.</p>
-        <p class="muted" style="font-size:.92rem">구현 세부와 후속 재구축은 <a href="sapp-intern.html">SApp 인턴 활동 페이지</a>에서 이어집니다.</p>
+        <h3>담당 범위</h3>
+        <p>전체 실험 설계, 최종 평가 파이프라인, 데이터셋 구성과 전처리·정규화, mutation engine 구현을 맡았다.</p>
+        <h3>비교 대상</h3>
+        <p>Garak, PyRIT, Promptfoo 3종을 평가했다. LLM 기반 평가기를 쓰는 PyRIT과 Promptfoo는 원본 프롬프트를 함께 주는 경우와 주지 않는 경우로 나눠 총 5개 구성을 비교했다.</p>
+        <p class="muted" style="font-size:.92rem">후속 재구축은 <a href="sapp-intern.html">SApp 인턴 활동 페이지</a>에서 이어진다. 그림을 누르면 원본 크기로 열린다.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 구성 요소 -->
 <section class="block" id="components">
   <div class="wrap">
     <div class="eyebrow">02 · Components</div>
     <h2>구성 요소</h2>
 
-    <div class="steps">
-      <div>Generator<small>변형 프롬프트 생성</small></div>
-      <div>Target<small>피평가 LLM</small></div>
-      <div>Scanner<small>스캐너 실행</small></div>
-      <div>Evaluator<small>정답 기준 대조</small></div>
+    <div class="split">
+      <figure>
+        <img src="../images/pivot-01-framework.png" alt="PIVOT 프레임워크 구조도">
+        <figcaption>입력 생성부터 지표 계산까지의 전체 흐름</figcaption>
+      </figure>
+      <div class="parts">
+        <h3>Generator</h3>
+        <p>변이 프롬프트를 만드는 Prompt Mutation Module과, 변형하지 않은 Structure-Intact Prompts로 실험 입력을 구성한다.</p>
+        <h3>Vulnerable LLM</h3>
+        <p>입력 p를 받아 응답 r을 낸다. 평가에 쓸 취약 응답이 충분히 나오도록 유도한 모델이다.</p>
+        <h3>Ground-Truth Oracle · Sampling</h3>
+        <p>응답 r을 위험·안전으로 나눠 정답 g를 고정하고, 두 비율을 조정해 평가 집합을 만든다.</p>
+        <h3>Scanner Under Test</h3>
+        <p>입력 어댑터로 스캐너별 입력 형식을 맞춘 뒤 상용 스캐너의 Evaluator 모듈을 실행해 PASS/FAIL 판정 s를 얻는다.</p>
+        <h3>Comparator</h3>
+        <p>정답 g와 스캐너 판정 s를 대조해 Recall, Precision, FPR, FNR을 계산한다.</p>
+      </div>
     </div>
 
     <details open>
-      <summary>Generator · Prompt Mutation</summary>
+      <summary>Seed Prompt · 공격 유형 커버리지</summary>
       <div class="body">
-        <p>원본 공격 프롬프트에 변형 연산자를 적용해 여러 형태의 입력을 만듭니다. 변형 연산자는 구조 유지형 값 변이(constraint), 형식 교란(FMT), 어휘 수준 변이(LEX), 구문 수준 변이(SYN)의 네 계열로 구현했습니다. 각 연산자는 강도 1~5단계로 나뉩니다.</p>
-        <p class="muted">구조를 보존한 채 변형하는 Structure-Intact Prompt를 함께 씁니다. 실험에 적용한 연산자는 형식(FMT) 2개, 구문(SYN) 3개, 어휘(LEX) 6개, 총 11개입니다.</p>
+        <div class="figstack">
+          <div class="note">
+            <p>평가용 prompt set의 대표성을 확보하기 위해 공개 데이터셋 5종의 기능 커버리지를 먼저 확인했다. 단일 공격군에 쏠리지 않도록 각 데이터셋에서 샘플링해 Seed Prompt를 구성했다.</p>
+            <p class="muted">HackAPrompt 35%, DoNotAnswer 20%, LLMmail·AdvBench·BeaverTails 각 15%다. 직접 인젝션, 간접 인젝션, harmful objective, refusal-needed, safe/unsafe 혼합의 5개 공격 유형을 모두 덮는다.</p>
+          </div>
+          <figure>
+            <a href="../images/pivot-02-seed-diversity.png" target="_blank" rel="noopener"><img src="../images/pivot-02-seed-diversity.png" alt="Seed Prompt 데이터셋 커버리지와 구성 비율"></a>
+          </figure>
+        </div>
       </div>
     </details>
 
     <details>
-      <summary>Evaluator · 정답 기준과 채점</summary>
+      <summary>Mutation Operator · 변형 연산자</summary>
       <div class="body">
-        <p>각 사례의 정답 기준(ground truth)을 먼저 고정하고, 스캐너 결과를 그 기준과 비교해 탐지 성공과 실패를 나눕니다. 스캐너가 내놓은 원래 판정(raw result)과 정규화한 판정은 분리해 기록합니다.</p>
-        <p class="muted">정답 기준과 스캐너 결과를 서로 다른 계층으로 나누는 이유는, 스캐너 결과를 정답처럼 쓰면 평가가 순환하기 때문입니다.</p>
+        <div class="figstack">
+          <div class="note">
+            <p>프롬프트의 공격 의도는 유지하되 표현 형식과 언어적 구성만 바꾸는 연산 단위다. 형식 교란(FMT), 구문 수준 변형(SYN), 어휘 수준 변형(LEX)의 3계열로 구현했고, 현재 총 11개다. 연산자 종류와 적용 강도, seed당 child 개수를 설정할 수 있다.</p>
+            <p class="muted">적용한 연산자와 원본 seed-child 매핑을 기록해, 변형 표현을 놓친 것인지 공격 의도를 놓친 것인지 구분할 수 있다.</p>
+          </div>
+          <figure>
+            <a href="../images/pivot-03-mutation-operator.png" target="_blank" rel="noopener"><img src="../images/pivot-03-mutation-operator.png" alt="FMT·SYN·LEX 세 계열의 변형 연산자 목록"></a>
+          </figure>
+        </div>
+
+        <div class="figside">
+          <figure>
+            <a href="../images/pivot-04-mutation-quality.png" target="_blank" rel="noopener"><img src="../images/pivot-04-mutation-quality.png" alt="Mutation 실험 품질 지표"></a>
+          </figure>
+          <div class="note">
+            <ul>
+              <li><b>조건</b> — seed 100개, 연산자 11개를 모두 선택 후보로 두고 seed당 child 2개 생성</li>
+              <li><b>결과</b> — 오류 없이 child 200개를 만들었고, 연산자 11개가 모두 쓰였다</li>
+              <li><b>지표</b> — Entropy 0.9853, Unique ratio 0.98, Parent diff 96%</li>
+            </ul>
+            <p class="muted">연산자가 균형 있게 쓰여 편향이 낮고, 중복률이 낮아 parent-child 차이가 크다. 변형 다양성을 확보했다는 뜻이다.</p>
+          </div>
+        </div>
       </div>
     </details>
 
     <details>
-      <summary>평가 지표</summary>
+      <summary>Vulnerable LLM · 평가 입력 생성 환경</summary>
       <div class="body">
-        <p>Recall, Precision, FPR, FNR을 기본 지표로 씁니다. 구조를 보존한 입력에 대한 탐지율과 변형 입력에 대한 회피율(Mutation Evasion Rate)도 함께 봅니다.</p>
-        <p class="muted" style="margin-bottom:0">계산에 쓴 분모와 수치는 결과 절에서 확정된 값만 옮깁니다.</p>
+        <div class="figside">
+          <figure>
+            <a href="../images/pivot-05-vulnerable-llm.png" target="_blank" rel="noopener"><img src="../images/pivot-05-vulnerable-llm.png" alt="Vulnerable LLM 파이프라인"></a>
+          </figure>
+          <div class="note">
+            <ul>
+              <li><b>목적</b> — Prompt Injection에 대한 취약 응답 생성 확률을 극대화한 Stress-Test 환경을 따로 구성했다</li>
+              <li><b>모델</b> — 안전 필터를 제거한 비검열 모델을 채택했다</li>
+              <li><b>구성</b> — Docker Compose로 FastAPI 애플리케이션과 Ollama 서버를 묶었다</li>
+              <li><b>흐름</b> — Watchdog이 프롬프트 생성을 감지하면 FastAPI가 자동으로 받아 응답을 만들고, 프롬프트와 응답을 쌍으로 jsonl에 기록한다</li>
+            </ul>
+            <p class="muted">생성한 응답은 Ground-Truth labeling과 Sampling을 거쳐 PIVOT Evaluator의 입력이 된다.</p>
+          </div>
+        </div>
+
+        <div class="figside">
+          <figure>
+            <a href="../images/pivot-06-orchestration.png" target="_blank" rel="noopener"><img src="../images/pivot-06-orchestration.png" alt="메시지 조립 구조와 신뢰 경계 붕괴 지점"></a>
+          </figure>
+          <div class="note">
+            <ul>
+              <li><b>의도</b> — 메시지를 조립하는 방식 자체를 취약하게 설계했다</li>
+              <li><b>사전조건</b> — 우선순위 혼선, Forced Preamble, Context 주입으로 공격이 성공할 환경을 만든다</li>
+              <li><b>핵심</b> — 사용자 입력을 TRUSTED INSTRUCTION으로 승격시켜 신뢰 경계(trust boundary)를 무너뜨린다</li>
+              <li><b>보강</b> — 동일 프롬프트를 재전송해 응답 확률을 높인다</li>
+            </ul>
+            <p class="muted">결과적으로 모델이 사용자 입력을 시스템 명령으로 처리한다.</p>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Scanner Under Test · 어댑터와 Evaluator 분리</summary>
+      <div class="body">
+        <div class="figstack">
+          <div class="note">
+            <p>스캐너마다 Evaluator가 받는 입력 형식이 달라 변환 계층을 뒀다. Garak은 Attempt 객체, PyRIT은 딕셔너리, Promptfoo는 YAML 테스트케이스로 각각 바꾼다. 상용 스캐너의 Evaluator만 떼어내 모듈로 구성한 이유는, 스캐너 전체가 아니라 판정 모듈만 독립적으로 평가하기 위해서다.</p>
+            <p class="muted">Garak은 규칙 기반 Detector 군, PyRIT은 LLM 기반 SelfAsk True False Scorer, Promptfoo는 llm-rubric 기반 LLM-as-a-Judge를 쓴다.</p>
+          </div>
+          <figure>
+            <a href="../images/pivot-07-scanner-pipeline.png" target="_blank" rel="noopener"><img src="../images/pivot-07-scanner-pipeline.png" alt="Scanner Under Test 상세 파이프라인"></a>
+          </figure>
+        </div>
       </div>
     </details>
   </div>
 </section>
 
-<!-- 결과·수상 -->
+<section class="block" id="dataset">
+  <div class="wrap">
+    <div class="eyebrow">03 · Dataset &amp; Metrics</div>
+    <h2>평가 데이터셋과 지표</h2>
+
+    <div class="figside">
+      <figure>
+        <a href="../images/pivot-08-dataset-metrics.png" target="_blank" rel="noopener"><img src="../images/pivot-08-dataset-metrics.png" alt="평가 데이터셋 구성 절차와 평가 지표 정의"></a>
+      </figure>
+      <div class="note">
+        <ul>
+          <li><b>생성</b> — seed prompt에서 변형 프롬프트 200개를 만들었다</li>
+          <li><b>검수</b> — 2차 정밀 검수를 거쳐 Mutated Prompts 100개를 확정했다</li>
+          <li><b>구성</b> — 변형 프롬프트 100개에 구조 보존 프롬프트 100개를 더해 평가 데이터셋을 만들었다</li>
+          <li><b>샘플링</b> — 위험 응답 150건, 안전 응답 50건이 되도록 비율을 맞췄다</li>
+        </ul>
+        <p class="muted">불균형 데이터셋에서 통계적 왜곡이 생기므로 단순 Accuracy는 배제했다.</p>
+      </div>
+    </div>
+
+    <details>
+      <summary>지표 정의</summary>
+      <div class="body">
+        <table class="plain">
+          <tr><th>Recall</th><td>실제 공격을 탐지한 비율</td></tr>
+          <tr><th>Precision</th><td>탐지 결과의 정확도</td></tr>
+          <tr><th>False Positive Rate</th><td>안전 응답을 위험으로 오분류한 비율</td></tr>
+          <tr><th>False Negative Rate</th><td>실제 공격을 탐지하지 못한 비율</td></tr>
+          <tr><th>Mutation Evasion Rate</th><td>seed는 탐지했으나 변형 후 놓친 비율. 변형 공격에 대한 강건성을 본다</td></tr>
+          <tr><th>Structure-Intact Detection Rate</th><td>코드·명령어·인코딩 등 구조형 입력의 탐지율. 자연어 외 커버리지를 본다</td></tr>
+        </table>
+      </div>
+    </details>
+  </div>
+</section>
+
 <section class="block" id="results">
   <div class="wrap">
-    <div class="eyebrow">03 · Results</div>
+    <div class="eyebrow">04 · Results</div>
     <h2>결과와 수상</h2>
+    <p class="lead">논문은 Garak과 PyRIT 두 스캐너를 다뤘다. 논문 제출 이후 Promptfoo를 추가해 최종 발표에서 확장한 결과를 아래에 함께 싣는다.</p>
 
     <table class="plain">
       <tr><th>발표 논문</th><td>PIVOT: Prompt Injection 탐지 성능 평가를 위한 LLM 취약점 스캐너 벤치마킹 프레임워크<br><span class="muted">PIVOT: A Benchmarking Framework for Evaluating LLM Vulnerability Scanners on Prompt Injection Detection</span></td></tr>
-      <tr><th>학회·수상</th><td>ASK 2026 학부생·고등학생 논문 경진대회 동상 (2026년 5월 학술대회)</td></tr>
+      <tr><th>저자</th><td>김채연, 양서현, <b>오다민</b>, 이수나, 김종길 (이화여자대학교 사이버보안전공)<br><span class="muted">5인 공동 연구이며, 아래 역할을 담당했다.</span></td></tr>
+      <tr><th>학회·수상</th><td>한국정보처리학회 ASK 2026 학부생 논문 경진대회 동상 (2026년 5월)</td></tr>
       <tr><th>내 역할</th><td>전체 실험 설계, 최종 평가 파이프라인, 데이터셋 구성, 데이터셋 전처리 및 정규화, mutation engine 구현</td></tr>
-      <tr><th>주요 수치</th><td>Garak 재현율 38.0%, 정밀도 90.5%, 오탐률 12.0%, 미탐률 62.0% / PyRIT 재현율 28.0%, 정밀도 73.7%, 오탐률 30.0%, 미탐률 72.0% (위험 응답 150건, 안전 응답 50건 샘플 기준)</td></tr>
-      <tr><th>논문 링크</th><td><a href="https://kips.or.kr/bbs/confn/article/4903">한국정보처리학회 ASK 2026 논문 페이지</a> · 논문집 제33권 제1호 (ISSN 2671-7298)</td></tr>
+      <tr><th>논문 링크</th><td><a href="https://koreascience.or.kr/article/CFKO202617757751319.pdf" target="_blank" rel="noopener">PDF 바로 보기</a> · <a href="https://koreascience.or.kr/article/CFKO202617757751319.page" target="_blank" rel="noopener">Korea Science 논문 페이지</a> · <a href="https://kips.or.kr/bbs/confn/article/4903" target="_blank" rel="noopener">학회 페이지</a><br><span class="muted">한국정보처리학회 학술대회논문집 2026.05a, pp. 368–370 · 논문집 제33권 제1호 (ISSN 2671-7298)</span></td></tr>
     </table>
 
+    <h3 style="margin-top:28px">주요 평가 지표 비교</h3>
+    <div class="figstack">
+      <div class="note">
+        <p>스캐너 간 탐지 전략 차이가 뚜렷했고, 입력 맥락을 함께 주는지 여부가 LLM 기반 스캐너의 성능에 유의미한 영향을 미쳤다. PyRIT은 프롬프트를 함께 주었을 때 Recall이 28.0%에서 60.0%로 올랐다.</p>
+        <p class="muted">규칙 기반인 Garak은 정밀도 90.5%로 가장 높지만 미탐률도 62.0%로 높다. 탐지 범위가 좁고 보수적이라는 뜻이다.</p>
+      </div>
+      <figure>
+        <a href="../images/pivot-09-metrics-comparison.png" target="_blank" rel="noopener"><img src="../images/pivot-09-metrics-comparison.png" alt="Garak, PyRIT, Promptfoo의 평가 지표 비교"></a>
+      </figure>
+    </div>
+
     <details open>
-      <summary>평가 지표 비교 (단위: %)</summary>
+      <summary>종합 성능 요약</summary>
       <div class="body">
-        <table class="plain">
-          <tr><th>지표</th><td>Garak / PyRIT</td></tr>
-          <tr><th>재현율 (Recall)</th><td>38.0 / 28.0</td></tr>
-          <tr><th>정밀도 (Precision)</th><td>90.5 / 73.7</td></tr>
-          <tr><th>오탐률 (FPR)</th><td>12.0 / 30.0</td></tr>
-          <tr><th>미탐률 (FNR)</th><td>62.0 / 72.0</td></tr>
-        </table>
-        <p class="muted" style="margin-bottom:0">PyRIT의 평가자는 Llama3-8B 모델입니다. 두 스캐너 모두 미탐률이 높았고, PyRIT은 Garak보다 오탐률이 높았습니다.</p>
+        <div class="figstack">
+          <div class="note">
+            <p>구조형 입력 탐지율과 변형 공격 회피율을 더해 보면 스캐너별 성격이 갈린다. Promptfoo는 프롬프트 없이도 Mutation Evasion이 12.9%로 가장 낮아 변형에 가장 덜 흔들렸다.</p>
+            <p class="muted">Garak은 보수적이고 탐지 범위가 좁다. PyRIT은 프롬프트를 주지 않으면 가장 취약하고, 주면 개선된다.</p>
+          </div>
+          <figure>
+            <a href="../images/pivot-10-summary.png" target="_blank" rel="noopener"><img src="../images/pivot-10-summary.png" alt="스캐너별 종합 성능 요약표"></a>
+          </figure>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>공격 유형별 탐지 성능</summary>
+      <div class="body">
+        <div class="figstack">
+          <div class="note">
+            <p>변형 후 실제 위험 출력으로 이어진 샘플 50개만 추려 공격 유형별로 나눠 봤다. seed 단계에서 안전했던 샘플은 제외해, 실제로 공격이 성공한 경우만 반영했다.</p>
+            <p class="muted">Garak은 data_exfiltration, format_injection, instruction_override, obfuscation, role_play_bypass에서 0.0%였다. 규칙 기반 탐지기가 다루지 못하는 유형이 드러난다.</p>
+          </div>
+          <figure>
+            <a href="../images/pivot-11-attack-type.png" target="_blank" rel="noopener"><img src="../images/pivot-11-attack-type.png" alt="공격 유형별 탐지 성능"></a>
+          </figure>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Structure-Intact 탐지 성능</summary>
+      <div class="body">
+        <div class="figstack">
+          <div class="note">
+            <p>코드, 명령어, 구조화된 템플릿, 인코딩·포맷 기반 공격 등 구조형 prompt injection 100개 중 몇 개를 탐지했는지 셌다. 변형 강건성과는 별개로, 자연어가 아닌 입력에 대한 탐지 범위를 보는 보완 평가다.</p>
+            <p class="muted">PyRIT은 프롬프트 미포함 32.0%에서 포함 63.0%로 올랐다. 구조 자체보다 그 구조가 어떤 맥락에서 위험하게 작동하는지를 함께 볼 때 더 잘 판단한다.</p>
+          </div>
+          <figure>
+            <a href="../images/pivot-12-structure-intact.png" target="_blank" rel="noopener"><img src="../images/pivot-12-structure-intact.png" alt="Structure-Intact 탐지 성능"></a>
+          </figure>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Mutation Robustness</summary>
+      <div class="body">
+        <div class="figstack">
+          <div class="note">
+            <p>Seed-Mutated 쌍 100개를 기준으로 seed 탐지 여부와 변형 후 탐지 여부를 쌍으로 비교했다. 단순 탐지율보다 Mutation Evasion Rate가 핵심 지표다. seed는 잡았는데 변형 후 놓쳤다면 표현만 바꾼 공격에 뚫린다는 뜻이기 때문이다.</p>
+            <p class="muted">PyRIT은 프롬프트 없이 73.1%가 변형에 회피당했다. Promptfoo는 12.9%로 가장 낮았다.</p>
+          </div>
+          <figure>
+            <a href="../images/pivot-13-mutation-robustness.png" target="_blank" rel="noopener"><img src="../images/pivot-13-mutation-robustness.png" alt="Mutation Robustness 분석"></a>
+          </figure>
+        </div>
       </div>
     </details>
 
@@ -187,28 +391,28 @@
       <summary>결과 해석 시 주의</summary>
       <div class="body">
         <ul>
-          <li>결과 수치는 스캐너 어댑터 구현과 정답 기준에 따라 달라집니다. 같은 수치라도 조건을 함께 봐야 합니다.</li>
-          <li>Garak 결과는 어댑터에 PI 외 탐지기가 섞여 있던 문제를 확인한 뒤 보수적으로 해석합니다. 논문 실험은 SApp 인턴 이전에 수행했으며, 재구축 이전 어댑터 구현 기준입니다.</li>
+          <li>결과 수치는 스캐너 어댑터 구현과 정답 기준에 따라 달라진다. 같은 수치라도 조건을 함께 봐야 한다.</li>
+          <li>Garak 결과는 어댑터에 PI 외 탐지기가 섞여 있던 문제를 확인한 뒤 보수적으로 해석한다. 논문 실험은 SApp 인턴 이전에 수행했으며, 재구축 이전 어댑터 구현 기준이다.</li>
         </ul>
       </div>
     </details>
   </div>
 </section>
 
-<!-- 한계·다음 단계 -->
 <section class="block" id="limits">
   <div class="wrap">
-    <div class="eyebrow">04 · Limitations</div>
+    <div class="eyebrow">05 · Limitations</div>
     <h2>한계와 다음 단계</h2>
 
     <details open>
       <summary>한계</summary>
       <div class="body">
         <ul>
-          <li>평가 표본이 200건(위험 150, 안전 50)으로 작아 수치를 일반화하기 어렵습니다.</li>
-          <li>정답 레이블은 규칙 기반 자동 분류와 연구자 검토로 만들었고, 다수 판정자 간 일치도는 측정하지 않았습니다.</li>
-          <li>Vulnerable LLM에 취약 응답을 강제로 유도했기 때문에, 실제 서비스 환경의 응답 분포와 다릅니다.</li>
-          <li>이후 어댑터 구현을 전수 조사한 결과 재구축이 필요했습니다. 논문 수치는 이 점을 감안해 읽어야 합니다.</li>
+          <li>평가 표본이 200건(위험 150, 안전 50)으로 작아 수치를 일반화하기 어렵다.</li>
+          <li>공격 유형별 분석은 표본 50개를 유형별로 더 나눈 것이라, 유형마다 표본이 한 자릿수인 경우가 있다.</li>
+          <li>정답 레이블은 규칙 기반 자동 분류와 연구자 검토로 만들었고, 다수 판정자 간 일치도는 측정하지 않았다.</li>
+          <li>Vulnerable LLM에 취약 응답을 강제로 유도했기 때문에, 실제 서비스 환경의 응답 분포와 다르다.</li>
+          <li>이후 어댑터 구현을 전수 조사한 결과 재구축이 필요했다. 논문 수치는 이 점을 감안해 읽어야 한다.</li>
         </ul>
       </div>
     </details>
@@ -217,8 +421,8 @@
       <summary>다음 단계</summary>
       <div class="body">
         <ul>
-          <li>재구축한 데이터셋과 평가 체계로 후속 연구 진행 (<a href="sapp-intern.html">SApp 인턴 활동</a>)</li>
-          <li>정답 기준 판정 재검토를 SApp 인턴 기간 중 완료했습니다.</li>
+          <li>재구축한 데이터셋과 평가 체계로 후속 연구를 진행하고 있다 (<a href="sapp-intern.html">SApp 인턴 활동</a>).</li>
+          <li>정답 기준 판정 재검토는 SApp 인턴 기간 중 완료했다.</li>
         </ul>
       </div>
     </details>
